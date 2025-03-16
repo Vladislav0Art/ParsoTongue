@@ -780,22 +780,175 @@ class LanguageLexerTest {
 
     @Test
     fun `tokenize if else-if else statement`() = runTest {
+        // arrange
+        val input = """
+            if (x < 0) {
+                return -1
+            } else if (x > 0) {
+                return 1
+            } else {
+                return 0
+            }
+        """.trimIndent()
 
+        // act
+        val tokens = lexer(input).tokenize()
+
+        // assert
+        // For complex inputs we verify only token types
+        val expectedTypes = listOf(
+            IF, LEFT_PAREN, IDENTIFIER, LESS_THAN, INTEGER, RIGHT_PAREN,
+            LEFT_BRACE, RETURN, MINUS, INTEGER, RIGHT_BRACE,
+            ELSE, IF, LEFT_PAREN, IDENTIFIER, GREATER_THAN, INTEGER, RIGHT_PAREN,
+            LEFT_BRACE, RETURN, INTEGER, RIGHT_BRACE,
+            ELSE, LEFT_BRACE, RETURN, INTEGER, RIGHT_BRACE
+        )
+
+        // verify the number of tokens (excluding EOF)
+        assertEquals(expectedTypes.size, tokens.size - 1)
+
+        // verify token types
+        expectedTypes.forEachIndexed { index, expectedType ->
+            assertEquals(expectedType, tokens[index].type)
+        }
     }
 
     @Test
     fun `tokenize several consequent function calls`() = runTest {
+        // arrange
+        val input = """
+            initialize()
+            process(getValue(), calculateSum(10, 20))
+            cleanup(getStatus())
+        """.trimIndent()
 
+        // act
+        val tokens = lexer(input).tokenize()
+
+        // assert
+        val expectedTypes = listOf(
+            // initialize()
+            IDENTIFIER, LEFT_PAREN, RIGHT_PAREN,
+            // process(getValue(), calculateSum(10, 20))
+            IDENTIFIER, LEFT_PAREN,                           // process(
+            IDENTIFIER, LEFT_PAREN, RIGHT_PAREN,             // getValue()
+            COMMA,                                           // ,
+            IDENTIFIER, LEFT_PAREN, INTEGER, COMMA, INTEGER, RIGHT_PAREN,  // calculateSum(10, 20)
+            RIGHT_PAREN,                                     // )
+            // cleanup(getStatus())
+            IDENTIFIER, LEFT_PAREN,                          // cleanup(
+            IDENTIFIER, LEFT_PAREN, RIGHT_PAREN,            // getStatus()
+            RIGHT_PAREN                                      // )
+        )
+
+        // verify the number of tokens (excluding EOF)
+        assertEquals(expectedTypes.size, tokens.size - 1)
+
+        // verify token types
+        expectedTypes.forEachIndexed { index, expectedType ->
+            assertEquals(expectedType, tokens[index].type)
+        }
     }
 
     @Test
     fun `tokenize multiline function declaration`() = runTest {
+        // arrange
+        val input = """
+            function calculateAverage(
+                firstNumber,
+                secondNumber,
+                thirdNumber
+            ) {
+                var sum = firstNumber +
+                    secondNumber +
+                    thirdNumber
+                return sum
+            }
+        """.trimIndent()
 
+        // act
+        val tokens = lexer(input).tokenize()
+
+        // assert
+        val expectedTypes = listOf(
+            // function declaration
+            FUNCTION, IDENTIFIER, LEFT_PAREN,
+            // parameters
+            IDENTIFIER, COMMA,
+            IDENTIFIER, COMMA,
+            IDENTIFIER,
+            RIGHT_PAREN, LEFT_BRACE,
+            // variable declaration
+            VAR, IDENTIFIER, ASSIGN,
+            // sum expression
+            IDENTIFIER, PLUS,
+            IDENTIFIER, PLUS,
+            IDENTIFIER,
+            // return statement
+            RETURN, IDENTIFIER,
+            RIGHT_BRACE
+        )
+
+        // verify the number of tokens (excluding EOF)
+        assertEquals(expectedTypes.size, tokens.size - 1)
+
+        // verify token types
+        expectedTypes.forEachIndexed { index, expectedType ->
+            assertEquals(expectedType, tokens[index].type)
+        }
     }
 
     @Test
     fun `tokenize several multiline variable declarations`() = runTest {
+        // arrange
+        val input = """
+            var firstNumber = 
+                10 + 
+                20 * 
+                30
+            var secondNumber = 
+                getValue() + 
+                calculateSum(
+                    40,
+                    50
+                )
+            var result = 
+                firstNumber + 
+                secondNumber
+        """.trimIndent()
 
+        // act
+        val tokens = lexer(input).tokenize()
+
+        // assert
+        val expectedTypes = listOf(
+            // first variable declaration
+            VAR, IDENTIFIER, ASSIGN,
+            INTEGER, PLUS,
+            INTEGER, MULTIPLY,
+            INTEGER,
+
+            // second variable declaration
+            VAR, IDENTIFIER, ASSIGN,
+            IDENTIFIER, LEFT_PAREN, RIGHT_PAREN, PLUS,
+            IDENTIFIER, LEFT_PAREN,
+            INTEGER, COMMA,
+            INTEGER,
+            RIGHT_PAREN,
+
+            // third variable declaration
+            VAR, IDENTIFIER, ASSIGN,
+            IDENTIFIER, PLUS,
+            IDENTIFIER
+        )
+
+        // verify the number of tokens (excluding EOF)
+        assertEquals(expectedTypes.size, tokens.size - 1)
+
+        // verify token types
+        expectedTypes.forEachIndexed { index, expectedType ->
+            assertEquals(expectedType, tokens[index].type)
+        }
     }
 
     @ParameterizedTest(name = "Tokenize {0} {1} {2}")
@@ -842,7 +995,86 @@ class LanguageLexerTest {
         assertEquals(secondOperand.toString(), tokens[2].lexeme)
     }
 
-    // TODO: create tests for multiline input
+    @Test
+    fun `tokenize multiline nested expressions`() = runTest {
+        // arrange
+        val input = """
+            var result = (
+                (10 + 20) *
+                    (30 + 
+                        40
+                    )
+            ) / 2
+        """.trimIndent()
+
+        // act
+        val tokens = lexer(input).tokenize()
+
+        // assert
+        val expectedTypes = listOf(
+            VAR, IDENTIFIER, ASSIGN,
+            LEFT_PAREN,
+            LEFT_PAREN, INTEGER, PLUS, INTEGER, RIGHT_PAREN,
+            MULTIPLY,
+            LEFT_PAREN, INTEGER, PLUS,
+            INTEGER,
+            RIGHT_PAREN,
+            RIGHT_PAREN,
+            DIVIDE, INTEGER
+        )
+
+        // verify the number of tokens (excluding EOF)
+        assertEquals(expectedTypes.size, tokens.size - 1)
+
+        // verify token types
+        expectedTypes.forEachIndexed { index, expectedType ->
+            assertEquals(expectedType, tokens[index].type)
+        }
+    }
+
+    @Test
+    fun `tokenize multiline complex expression with function calls`() = runTest {
+        // arrange
+        val input = """
+            var total = 
+                calculateSum(
+                    getValue(
+                        10,
+                        20
+                    ),
+                    processNumber(
+                        30
+                    )
+                ) +
+                getDefaultValue()
+        """.trimIndent()
+
+        // act
+        val tokens = lexer(input).tokenize()
+
+        // assert
+        val expectedTypes = listOf(
+            VAR, IDENTIFIER, ASSIGN,
+            IDENTIFIER, LEFT_PAREN,
+            IDENTIFIER, LEFT_PAREN,
+            INTEGER, COMMA,
+            INTEGER,
+            RIGHT_PAREN, COMMA,
+            IDENTIFIER, LEFT_PAREN,
+            INTEGER,
+            RIGHT_PAREN,
+            RIGHT_PAREN, PLUS,
+            IDENTIFIER, LEFT_PAREN, RIGHT_PAREN
+        )
+
+        // verify the number of tokens (excluding EOF)
+        assertEquals(expectedTypes.size, tokens.size - 1)
+
+        // verify token types
+        expectedTypes.forEachIndexed { index, expectedType ->
+            assertEquals(expectedType, tokens[index].type)
+        }
+    }
 
 
     companion object {
