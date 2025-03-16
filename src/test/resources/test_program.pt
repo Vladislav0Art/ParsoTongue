@@ -1,0 +1,45 @@
+function max(a, b) {
+    if (a >= b) {
+        return a;
+    } else {
+        return b;
+    }
+}
+
+function isEven(num) {
+    var remainder = num % 2;
+    if (remainder == 0) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+function calculateExpression(x, y) {
+    var sum = x + y;
+    var product = x * y;
+    var difference = x - y;
+    
+    if (sum > product) {
+        return sum + difference;
+    } else {
+        if (product != 0) {
+            return product / 2;
+        } else {
+            return difference;
+        }
+    }
+}
+
+var number1 = 15;
+var number2 = 10;
+
+var maxNumber = max(number1, number2);
+var isMaxEven = isEven(maxNumber);
+var result = calculateExpression(number1, number2);
+
+if (isMaxEven == 1) {
+    var message = "Max number is even";
+} else {
+    var message = "Max number is odd";
+}

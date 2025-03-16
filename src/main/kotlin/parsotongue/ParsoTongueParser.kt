@@ -1,18 +1,26 @@
 package parsotongue
 
-import parsotongue.lexer.Lexer
-import parsotongue.parser.ASTNode.Program
-import parsotongue.parser.Parser
+import parsotongue.providers.LexerProvider
+import parsotongue.providers.ParserProvider
+import parsotongue.parser.Program
+import java.io.File
+
 
 class ParsoTongueParser(
-    private val lexer: Lexer,
-    private val parser: Parser
-    // TODO: add settings?
+    private val lexerProvider: LexerProvider,
+    private val parserProvider: ParserProvider,
 ) {
     fun parse(source: String): Program {
-        val tokens = lexer.tokenize(source)
-        val program  = parser.parse(tokens)
+        val lexer = lexerProvider.get(source)
+        val tokens = lexer.tokenize()
+
+        val parser = parserProvider.get(tokens)
+        val program  = parser.parse()
 
         return program
     }
+
+    fun parse(file: File): Program = parse(file.readText())
+
+    fun read(filepath: String): Program = parse(File(filepath))
 }
