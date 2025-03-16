@@ -801,11 +801,12 @@ class LanguageLexerTest {
             LEFT_BRACE, RETURN, MINUS, INTEGER, RIGHT_BRACE,
             ELSE, IF, LEFT_PAREN, IDENTIFIER, GREATER_THAN, INTEGER, RIGHT_PAREN,
             LEFT_BRACE, RETURN, INTEGER, RIGHT_BRACE,
-            ELSE, LEFT_BRACE, RETURN, INTEGER, RIGHT_BRACE
+            ELSE, LEFT_BRACE, RETURN, INTEGER, RIGHT_BRACE,
+            EOF
         )
 
-        // verify the number of tokens (excluding EOF)
-        assertEquals(expectedTypes.size, tokens.size - 1)
+        // verify the number of tokens
+        assertEquals(expectedTypes.size, tokens.size)
 
         // verify token types
         expectedTypes.forEachIndexed { index, expectedType ->
@@ -838,11 +839,12 @@ class LanguageLexerTest {
             // cleanup(getStatus())
             IDENTIFIER, LEFT_PAREN,                          // cleanup(
             IDENTIFIER, LEFT_PAREN, RIGHT_PAREN,            // getStatus()
-            RIGHT_PAREN                                      // )
+            RIGHT_PAREN,                                     // )
+            EOF
         )
 
-        // verify the number of tokens (excluding EOF)
-        assertEquals(expectedTypes.size, tokens.size - 1)
+        // verify the number of tokens
+        assertEquals(expectedTypes.size, tokens.size)
 
         // verify token types
         expectedTypes.forEachIndexed { index, expectedType ->
@@ -886,11 +888,12 @@ class LanguageLexerTest {
             IDENTIFIER,
             // return statement
             RETURN, IDENTIFIER,
-            RIGHT_BRACE
+            RIGHT_BRACE,
+            EOF
         )
 
-        // verify the number of tokens (excluding EOF)
-        assertEquals(expectedTypes.size, tokens.size - 1)
+        // verify the number of tokens
+        assertEquals(expectedTypes.size, tokens.size)
 
         // verify token types
         expectedTypes.forEachIndexed { index, expectedType ->
@@ -939,11 +942,13 @@ class LanguageLexerTest {
             // third variable declaration
             VAR, IDENTIFIER, ASSIGN,
             IDENTIFIER, PLUS,
-            IDENTIFIER
+            IDENTIFIER,
+
+            EOF
         )
 
-        // verify the number of tokens (excluding EOF)
-        assertEquals(expectedTypes.size, tokens.size - 1)
+        // verify the number of tokens
+        assertEquals(expectedTypes.size, tokens.size)
 
         // verify token types
         expectedTypes.forEachIndexed { index, expectedType ->
@@ -1020,11 +1025,12 @@ class LanguageLexerTest {
             INTEGER,
             RIGHT_PAREN,
             RIGHT_PAREN,
-            DIVIDE, INTEGER
+            DIVIDE, INTEGER,
+            EOF
         )
 
-        // verify the number of tokens (excluding EOF)
-        assertEquals(expectedTypes.size, tokens.size - 1)
+        // verify the number of tokens
+        assertEquals(expectedTypes.size, tokens.size)
 
         // verify token types
         expectedTypes.forEachIndexed { index, expectedType ->
@@ -1064,11 +1070,12 @@ class LanguageLexerTest {
             INTEGER,
             RIGHT_PAREN,
             RIGHT_PAREN, PLUS,
-            IDENTIFIER, LEFT_PAREN, RIGHT_PAREN
+            IDENTIFIER, LEFT_PAREN, RIGHT_PAREN,
+            EOF
         )
 
-        // verify the number of tokens (excluding EOF)
-        assertEquals(expectedTypes.size, tokens.size - 1)
+        // verify the number of tokens
+        assertEquals(expectedTypes.size, tokens.size)
 
         // verify token types
         expectedTypes.forEachIndexed { index, expectedType ->
