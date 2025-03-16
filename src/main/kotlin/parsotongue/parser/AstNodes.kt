@@ -1,6 +1,5 @@
 package parsotongue.parser
 
-import parsotongue.lexer.Token
 import parsotongue.lexer.TokenType
 
 sealed class ASTNode
@@ -10,12 +9,12 @@ data class Program(val statements: List<Statement>) : ASTNode()
 
 sealed class Statement : ASTNode()
 
-data class VariableDefinition(
+data class VariableDeclaration(
     val name: String,
     val initialValue: Expression
 ) : Statement()
 
-data class FunctionDefinition(
+data class FunctionDeclaration(
     val name: String,
     val parameters: List<String>,
     val body: Block

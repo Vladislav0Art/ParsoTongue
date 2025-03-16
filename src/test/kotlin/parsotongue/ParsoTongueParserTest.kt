@@ -24,7 +24,7 @@ class ParsoTongueParserTest {
 
     @Test
     fun parse() {
-        val source = "1 + 2 + 12"
+        val source = "1 + 2 + 12;"
         val program = parser.parse(source)
 
         /**

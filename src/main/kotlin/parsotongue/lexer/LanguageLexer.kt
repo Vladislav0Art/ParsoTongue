@@ -34,7 +34,6 @@ class LanguageLexer(private val source: String) : Lexer {
             literal = null,
             line = line,
             column = column,
-            // TODO: is it `start`?
             startOffset = start,
         ))
 
