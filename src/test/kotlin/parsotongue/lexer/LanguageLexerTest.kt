@@ -2,14 +2,18 @@ package parsotongue.lexer
 
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
 import parsotongue.lexer.TokenType.Identifier.IDENTIFIER
 import parsotongue.lexer.TokenType.Keyword.*
 import parsotongue.lexer.TokenType.Literal.INTEGER
 import parsotongue.lexer.TokenType.Operator.*
 import parsotongue.lexer.TokenType.Other.EOF
 import parsotongue.lexer.TokenType.Symbol.*
+import org.junit.jupiter.params.provider.MethodSource
 import parsotongue.providers.LanguageLexerProvider
+import java.util.stream.Stream
 import kotlin.test.assertEquals
 
 
@@ -770,5 +774,96 @@ class LanguageLexerTest {
         assertEquals(expectedTokens, tokens)
     }
 
+    /**
+     * In more complex inputs we assert only token types and order, not positioning
+     */
 
+    @Test
+    fun `tokenize if else-if else statement`() = runTest {
+
+    }
+
+    @Test
+    fun `tokenize several consequent function calls`() = runTest {
+
+    }
+
+    @Test
+    fun `tokenize multiline function declaration`() = runTest {
+
+    }
+
+    @Test
+    fun `tokenize several multiline variable declarations`() = runTest {
+
+    }
+
+    @ParameterizedTest(name = "Tokenize {0} {1} {2}")
+    @MethodSource("arithmeticOperationsProvider")
+    @DisplayName("Tokenize multiline arithmetic operations")
+    fun `tokenize multiline arithmetic operations`(
+        firstOperand: Int,
+        operator: String,
+        secondOperand: Int,
+        expectedTokenTypes: List<TokenType>
+    ) = runTest {
+        // arrange
+        val input = """
+            $firstOperand
+               $operator
+            $secondOperand
+        """.trimIndent()
+
+        // act
+        val tokens = lexer(input).tokenize()
+
+        // assert
+        // verify the number of tokens (excluding EOF)
+        assertEquals(expectedTokenTypes.size, tokens.size - 1)
+
+        // verify each token type
+        expectedTokenTypes.forEachIndexed { index, expectedType ->
+            assertEquals(expectedType, tokens[index].type)
+        }
+
+        // verify the positions of tokens
+        assertEquals(1, tokens[0].line)
+        assertEquals(1, tokens[0].column)
+
+        assertEquals(2, tokens[1].line)
+        assertEquals(4, tokens[1].column)
+
+        assertEquals(3, tokens[2].line)
+        assertEquals(1, tokens[2].column)
+
+        // verify the token values
+        assertEquals(firstOperand.toString(), tokens[0].lexeme)
+        assertEquals(operator, tokens[1].lexeme)
+        assertEquals(secondOperand.toString(), tokens[2].lexeme)
+    }
+
+    // TODO: create tests for multiline input
+
+
+    companion object {
+        @JvmStatic
+        fun arithmeticOperationsProvider(): Stream<Array<Any>> {
+            return Stream.of(
+                /**
+                 * Format: `firstOperand`, `operator`, `secondOperand`, `expectedTokenTypes`
+                 */
+                arrayOf(123, "+", 234, listOf(INTEGER, PLUS, INTEGER)),
+                arrayOf(456, "-", 789, listOf(INTEGER, MINUS, INTEGER)),
+                arrayOf(55, "*", 11, listOf(INTEGER, MULTIPLY, INTEGER)),
+                arrayOf(100, "/", 25, listOf(INTEGER, DIVIDE, INTEGER)),
+                arrayOf(101, "%", 10, listOf(INTEGER, MODULO, INTEGER)),
+                arrayOf(0, "==", 0, listOf(INTEGER, EQUAL_EQUAL, INTEGER)),
+                arrayOf(42, "!=", 43, listOf(INTEGER, NOT_EQUAL, INTEGER)),
+                arrayOf(10, "<", 20, listOf(INTEGER, LESS_THAN, INTEGER)),
+                arrayOf(30, ">", 20, listOf(INTEGER, GREATER_THAN, INTEGER)),
+                arrayOf(5, "<=", 10, listOf(INTEGER, LESS_EQUAL, INTEGER)),
+                arrayOf(15, ">=", 10, listOf(INTEGER, GREATER_EQUAL, INTEGER))
+            )
+        }
+    }
 }
