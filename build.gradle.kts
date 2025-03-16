@@ -12,6 +12,7 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
 }
 
 tasks.test {
