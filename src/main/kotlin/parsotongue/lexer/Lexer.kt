@@ -1,5 +1,5 @@
 package parsotongue.lexer
 
 interface Lexer {
-    fun tokenize(): List<Token>
+    suspend fun tokenize(): List<Token>
 }
