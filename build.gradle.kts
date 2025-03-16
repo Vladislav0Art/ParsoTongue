@@ -13,6 +13,8 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.1")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
+    testImplementation("io.github.oshai:kotlin-logging-jvm:7.0.3")
+    testImplementation("ch.qos.logback:logback-classic:1.4.12")
 }
 
 tasks.test {
