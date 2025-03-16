@@ -1,4 +1,4 @@
-package ij.demo.parsotongue.parser
+package parsotongue.parser
 
 import parsotongue.lexer.Token
 import parsotongue.parser.Parser

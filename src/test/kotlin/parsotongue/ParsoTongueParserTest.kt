@@ -1,8 +1,8 @@
 package parsotongue
 
-import ij.demo.parsotongue.lexer.LanguageLexer
-import ij.demo.parsotongue.parser.LanguageParser
-import org.junit.jupiter.api.Assertions.*
+import parsotongue.providers.LanguageLexerProvider
+import parsotongue.providers.LanguageParserProvider
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import parsotongue.lexer.TokenType
@@ -17,8 +17,8 @@ class ParsoTongueParserTest {
     @BeforeEach
     fun setUp() {
         parser = ParsoTongueParser(
-            lexerProvider = LanguageLexer(),
-            parserProvider = LanguageParser()
+            lexerProvider = LanguageLexerProvider,
+            parserProvider = LanguageParserProvider,
         )
     }
 

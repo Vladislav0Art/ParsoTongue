@@ -1,48 +1,31 @@
 package parsotongue.lexer
 
-import ij.demo.parsotongue.lexer.LanguageLexer
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import parsotongue.lexer.TokenType.Identifier.IDENTIFIER
-import parsotongue.lexer.TokenType.Keyword.ELSE
-import parsotongue.lexer.TokenType.Keyword.FUNCTION
-import parsotongue.lexer.TokenType.Keyword.IF
-import parsotongue.lexer.TokenType.Keyword.RETURN
-import parsotongue.lexer.TokenType.Keyword.VAR
+import parsotongue.lexer.TokenType.Keyword.*
 import parsotongue.lexer.TokenType.Literal.INTEGER
-import parsotongue.lexer.TokenType.Operator.DIVIDE
-import parsotongue.lexer.TokenType.Operator.EQUAL_EQUAL
-import parsotongue.lexer.TokenType.Operator.GREATER_EQUAL
-import parsotongue.lexer.TokenType.Operator.GREATER_THAN
-import parsotongue.lexer.TokenType.Operator.LESS_EQUAL
-import parsotongue.lexer.TokenType.Operator.LESS_THAN
-import parsotongue.lexer.TokenType.Operator.MINUS
-import parsotongue.lexer.TokenType.Operator.MODULO
-import parsotongue.lexer.TokenType.Operator.MULTIPLY
-import parsotongue.lexer.TokenType.Operator.NOT_EQUAL
-import parsotongue.lexer.TokenType.Operator.PLUS
-import parsotongue.lexer.TokenType.Symbol.ASSIGN
-import parsotongue.lexer.TokenType.Symbol.LEFT_BRACE
-import parsotongue.lexer.TokenType.Symbol.LEFT_PAREN
-import parsotongue.lexer.TokenType.Symbol.RIGHT_BRACE
-import parsotongue.lexer.TokenType.Symbol.RIGHT_PAREN
+import parsotongue.lexer.TokenType.Operator.*
+import parsotongue.lexer.TokenType.Symbol.*
+import parsotongue.providers.LanguageLexerProvider
 import kotlin.test.assertEquals
 
 
-
 class LanguageLexerTest {
-    private lateinit var lexer: Lexer
+    private lateinit var lexerProvider: LanguageLexerProvider
 
     @BeforeEach
     fun setUp() {
-        lexer = LanguageLexer()
+        lexerProvider = LanguageLexerProvider
     }
+
+    private fun lexer(source: String) = lexerProvider.get(source)
 
     @Test
     fun `tokenize addition of two digits`() = runTest {
         val input = "1 + 2"
-        val tokens = lexer.tokenize(input)
+        val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             // 1
@@ -78,7 +61,7 @@ class LanguageLexerTest {
     @Test
     fun `tokenize subtraction of two digits`() = runTest {
         val input = "5 - 3"
-        val tokens = lexer.tokenize(input)
+        val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             Token(
@@ -111,7 +94,7 @@ class LanguageLexerTest {
     @Test
     fun `tokenize multiplication of two digits`() = runTest {
         val input = "4 * 6"
-        val tokens = lexer.tokenize(input)
+        val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             Token(
@@ -144,7 +127,7 @@ class LanguageLexerTest {
     @Test
     fun `tokenize division of two digits`() = runTest {
         val input = "8 / 2"
-        val tokens = lexer.tokenize(input)
+        val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             Token(
@@ -177,7 +160,7 @@ class LanguageLexerTest {
     @Test
     fun `tokenize modulo of two digits`() = runTest {
         val input = "10 % 3"
-        val tokens = lexer.tokenize(input)
+        val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             Token(
@@ -210,7 +193,7 @@ class LanguageLexerTest {
     @Test
     fun `tokenize simple variable declaration`() = runTest {
         val input = "var counter"
-        val tokens = lexer.tokenize(input)
+        val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             Token(
@@ -234,7 +217,7 @@ class LanguageLexerTest {
     @Test
     fun `tokenize variable declaration with assignment`() = runTest {
         val input = "var total = 42"
-        val tokens = lexer.tokenize(input)
+        val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             Token(
@@ -273,7 +256,7 @@ class LanguageLexerTest {
     @Test
     fun `tokenize less than and greater than operators`() = runTest {
         val input = "5 < 10 > 3"
-        val tokens = lexer.tokenize(input)
+        val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             Token(
@@ -321,7 +304,7 @@ class LanguageLexerTest {
     @Test
     fun `tokenize less than or equal and greater than or equal operators`() = runTest {
         val input = "x <= 100 >= y"
-        val tokens = lexer.tokenize(input)
+        val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             Token(
@@ -367,7 +350,7 @@ class LanguageLexerTest {
     @Test
     fun `tokenize equality and inequality operators`() = runTest {
         val input = "count == 0 != max"
-        val tokens = lexer.tokenize(input)
+        val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             Token(
@@ -413,7 +396,7 @@ class LanguageLexerTest {
     @Test
     fun `tokenize void function declaration`() = runTest {
         val input = "function init() { }"
-        val tokens = lexer.tokenize(input)
+        val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             Token(
@@ -465,7 +448,7 @@ class LanguageLexerTest {
     @Test
     fun `tokenize function declaration with return value`() = runTest {
         val input = "function getValue() { return 42 }"
-        val tokens = lexer.tokenize(input)
+        val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             Token(
@@ -532,7 +515,7 @@ class LanguageLexerTest {
     @Test
     fun `tokenize simple if statement`() = runTest {
         val input = "if (x > 0) { }"
-        val tokens = lexer.tokenize(input)
+        val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             Token(
@@ -599,7 +582,7 @@ class LanguageLexerTest {
     @Test
     fun `tokenize if else statement`() = runTest {
         val input = "if (value == 100) { } else { }"
-        val tokens = lexer.tokenize(input)
+        val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             Token(

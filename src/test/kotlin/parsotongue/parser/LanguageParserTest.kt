@@ -1,15 +1,15 @@
 package parsotongue.parser
 
-import ij.demo.parsotongue.parser.LanguageParser
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import parsotongue.providers.LanguageParserProvider
 
 class LanguageParserTest {
-    private lateinit var parser: Parser
+    private lateinit var parserProvider: LanguageParserProvider
 
     @BeforeEach
     fun setUp() {
-        parser = LanguageParser()
+        parserProvider = LanguageParserProvider
     }
 
     @Test

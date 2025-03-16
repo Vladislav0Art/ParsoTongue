@@ -1,14 +1,6 @@
-package ij.demo.parsotongue.lexer
+package parsotongue.lexer
 
-import parsotongue.lexer.Lexer
-import parsotongue.lexer.Token
-import parsotongue.lexer.TokenType
-import parsotongue.lexer.TokenType.Identifier
-import parsotongue.lexer.TokenType.Keyword
-import parsotongue.lexer.TokenType.Literal
-import parsotongue.lexer.TokenType.Operator
-import parsotongue.lexer.TokenType.Other
-import parsotongue.lexer.TokenType.Symbol
+import parsotongue.lexer.TokenType.*
 
 
 class LanguageLexer(private val source: String) : Lexer {
