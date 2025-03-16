@@ -1,17 +1,21 @@
 package parsotongue
 
 import parsotongue.lexer.Lexer
+import parsotongue.lexer.Token
 import parsotongue.parser.Program
 import parsotongue.parser.Parser
 
 class ParsoTongueParser(
-    private val lexer: Lexer,
-    private val parser: Parser
-    // TODO: add settings?
+    // TODO: make interfaces
+    private val lexerProvider: (String) -> Lexer,
+    private val parserProvider: (List<Token>) -> Parser,
 ) {
     fun parse(source: String): Program {
+        val lexer = lexerProvider(source)
         val tokens = lexer.tokenize(source)
-        val program  = parser.parse(tokens)
+
+        val parser = parserProvider(tokens)
+        val program  = parser.parse()
 
         return program
     }

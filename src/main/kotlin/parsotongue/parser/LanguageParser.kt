@@ -5,8 +5,8 @@ import parsotongue.parser.Parser
 import parsotongue.parser.Program
 
 
-class LanguageParser : Parser {
-    override fun parse(tokens: List<Token>): Program {
+class LanguageParser(private val tokens: List<Token>) : Parser {
+    override fun parse(): Program {
         TODO("Not yet implemented")
     }
 }

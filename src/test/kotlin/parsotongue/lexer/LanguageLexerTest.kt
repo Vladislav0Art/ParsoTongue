@@ -52,7 +52,7 @@ class LanguageLexerTest {
                 literal = 1,
                 line = 0,
                 column = 0,
-                offset = 0,
+                startOffset = 0,
             ),
             // +
             Token(
@@ -60,7 +60,7 @@ class LanguageLexerTest {
                 lexeme = "+",
                 line = 0,
                 column = 2,
-                offset = 2,
+                startOffset = 2,
             ),
             // 2
             Token(
@@ -69,7 +69,7 @@ class LanguageLexerTest {
                 literal = 2,
                 line = 0,
                 column = 4,
-                offset = 4,
+                startOffset = 4,
             )
         )
         assertEquals(expectedTokens, tokens)
@@ -87,14 +87,14 @@ class LanguageLexerTest {
                 literal = 5,
                 line = 0,
                 column = 0,
-                offset = 0,
+                startOffset = 0,
             ),
             Token(
                 type = MINUS,
                 lexeme = "-",
                 line = 0,
                 column = 2,
-                offset = 2,
+                startOffset = 2,
             ),
             Token(
                 type = INTEGER,
@@ -102,7 +102,7 @@ class LanguageLexerTest {
                 literal = 3,
                 line = 0,
                 column = 4,
-                offset = 4,
+                startOffset = 4,
             )
         )
         assertEquals(expectedTokens, tokens)
@@ -120,14 +120,14 @@ class LanguageLexerTest {
                 literal = 4,
                 line = 0,
                 column = 0,
-                offset = 0,
+                startOffset = 0,
             ),
             Token(
                 type = MULTIPLY,
                 lexeme = "*",
                 line = 0,
                 column = 2,
-                offset = 2,
+                startOffset = 2,
             ),
             Token(
                 type = INTEGER,
@@ -135,7 +135,7 @@ class LanguageLexerTest {
                 literal = 6,
                 line = 0,
                 column = 4,
-                offset = 4,
+                startOffset = 4,
             )
         )
         assertEquals(expectedTokens, tokens)
@@ -153,14 +153,14 @@ class LanguageLexerTest {
                 literal = 8,
                 line = 0,
                 column = 0,
-                offset = 0,
+                startOffset = 0,
             ),
             Token(
                 type = DIVIDE,
                 lexeme = "/",
                 line = 0,
                 column = 2,
-                offset = 2,
+                startOffset = 2,
             ),
             Token(
                 type = INTEGER,
@@ -168,7 +168,7 @@ class LanguageLexerTest {
                 literal = 2,
                 line = 0,
                 column = 4,
-                offset = 4,
+                startOffset = 4,
             )
         )
         assertEquals(expectedTokens, tokens)
@@ -186,14 +186,14 @@ class LanguageLexerTest {
                 literal = 10,
                 line = 0,
                 column = 0,
-                offset = 0,
+                startOffset = 0,
             ),
             Token(
                 type = MODULO,
                 lexeme = "%",
                 line = 0,
                 column = 3,
-                offset = 3,
+                startOffset = 3,
             ),
             Token(
                 type = INTEGER,
@@ -201,7 +201,7 @@ class LanguageLexerTest {
                 literal = 3,
                 line = 0,
                 column = 5,
-                offset = 5,
+                startOffset = 5,
             )
         )
         assertEquals(expectedTokens, tokens)
@@ -218,14 +218,14 @@ class LanguageLexerTest {
                 lexeme = "var",
                 line = 0,
                 column = 0,
-                offset = 0,
+                startOffset = 0,
             ),
             Token(
                 type = IDENTIFIER,
                 lexeme = "counter",
                 line = 0,
                 column = 4,
-                offset = 4,
+                startOffset = 4,
             )
         )
         assertEquals(expectedTokens, tokens)
@@ -242,21 +242,21 @@ class LanguageLexerTest {
                 lexeme = "var",
                 line = 0,
                 column = 0,
-                offset = 0,
+                startOffset = 0,
             ),
             Token(
                 type = IDENTIFIER,
                 lexeme = "total",
                 line = 0,
                 column = 4,
-                offset = 4,
+                startOffset = 4,
             ),
             Token(
                 type = ASSIGN,
                 lexeme = "=",
                 line = 0,
                 column = 10,
-                offset = 10,
+                startOffset = 10,
             ),
             Token(
                 type = INTEGER,
@@ -264,7 +264,7 @@ class LanguageLexerTest {
                 literal = 42,
                 line = 0,
                 column = 12,
-                offset = 12,
+                startOffset = 12,
             )
         )
         assertEquals(expectedTokens, tokens)
@@ -282,14 +282,14 @@ class LanguageLexerTest {
                 literal = 5,
                 line = 0,
                 column = 0,
-                offset = 0,
+                startOffset = 0,
             ),
             Token(
                 type = LESS_THAN,
                 lexeme = "<",
                 line = 0,
                 column = 2,
-                offset = 2,
+                startOffset = 2,
             ),
             Token(
                 type = INTEGER,
@@ -297,14 +297,14 @@ class LanguageLexerTest {
                 literal = 10,
                 line = 0,
                 column = 4,
-                offset = 4,
+                startOffset = 4,
             ),
             Token(
                 type = GREATER_THAN,
                 lexeme = ">",
                 line = 0,
                 column = 7,
-                offset = 7,
+                startOffset = 7,
             ),
             Token(
                 type = INTEGER,
@@ -312,7 +312,7 @@ class LanguageLexerTest {
                 literal = 3,
                 line = 0,
                 column = 9,
-                offset = 9,
+                startOffset = 9,
             )
         )
         assertEquals(expectedTokens, tokens)
@@ -329,14 +329,14 @@ class LanguageLexerTest {
                 lexeme = "x",
                 line = 0,
                 column = 0,
-                offset = 0,
+                startOffset = 0,
             ),
             Token(
                 type = LESS_EQUAL,
                 lexeme = "<=",
                 line = 0,
                 column = 2,
-                offset = 2,
+                startOffset = 2,
             ),
             Token(
                 type = INTEGER,
@@ -344,21 +344,21 @@ class LanguageLexerTest {
                 literal = 100,
                 line = 0,
                 column = 5,
-                offset = 5,
+                startOffset = 5,
             ),
             Token(
                 type = GREATER_EQUAL,
                 lexeme = ">=",
                 line = 0,
                 column = 9,
-                offset = 9,
+                startOffset = 9,
             ),
             Token(
                 type = IDENTIFIER,
                 lexeme = "y",
                 line = 0,
                 column = 12,
-                offset = 12,
+                startOffset = 12,
             )
         )
         assertEquals(expectedTokens, tokens)
@@ -375,14 +375,14 @@ class LanguageLexerTest {
                 lexeme = "count",
                 line = 0,
                 column = 0,
-                offset = 0,
+                startOffset = 0,
             ),
             Token(
                 type = EQUAL_EQUAL,
                 lexeme = "==",
                 line = 0,
                 column = 6,
-                offset = 6,
+                startOffset = 6,
             ),
             Token(
                 type = INTEGER,
@@ -390,21 +390,21 @@ class LanguageLexerTest {
                 literal = 0,
                 line = 0,
                 column = 9,
-                offset = 9,
+                startOffset = 9,
             ),
             Token(
                 type = NOT_EQUAL,
                 lexeme = "!=",
                 line = 0,
                 column = 11,
-                offset = 11,
+                startOffset = 11,
             ),
             Token(
                 type = IDENTIFIER,
                 lexeme = "max",
                 line = 0,
                 column = 14,
-                offset = 14,
+                startOffset = 14,
             )
         )
         assertEquals(expectedTokens, tokens)
@@ -421,42 +421,42 @@ class LanguageLexerTest {
                 lexeme = "function",
                 line = 0,
                 column = 0,
-                offset = 0,
+                startOffset = 0,
             ),
             Token(
                 type = IDENTIFIER,
                 lexeme = "init",
                 line = 0,
                 column = 9,
-                offset = 9,
+                startOffset = 9,
             ),
             Token(
                 type = LEFT_PAREN,
                 lexeme = "(",
                 line = 0,
                 column = 13,
-                offset = 13,
+                startOffset = 13,
             ),
             Token(
                 type = RIGHT_PAREN,
                 lexeme = ")",
                 line = 0,
                 column = 14,
-                offset = 14,
+                startOffset = 14,
             ),
             Token(
                 type = LEFT_BRACE,
                 lexeme = "{",
                 line = 0,
                 column = 16,
-                offset = 16,
+                startOffset = 16,
             ),
             Token(
                 type = RIGHT_BRACE,
                 lexeme = "}",
                 line = 0,
                 column = 18,
-                offset = 18,
+                startOffset = 18,
             )
         )
         assertEquals(expectedTokens, tokens)
@@ -473,42 +473,42 @@ class LanguageLexerTest {
                 lexeme = "function",
                 line = 0,
                 column = 0,
-                offset = 0,
+                startOffset = 0,
             ),
             Token(
                 type = IDENTIFIER,
                 lexeme = "getValue",
                 line = 0,
                 column = 9,
-                offset = 9,
+                startOffset = 9,
             ),
             Token(
                 type = LEFT_PAREN,
                 lexeme = "(",
                 line = 0,
                 column = 17,
-                offset = 17,
+                startOffset = 17,
             ),
             Token(
                 type = RIGHT_PAREN,
                 lexeme = ")",
                 line = 0,
                 column = 18,
-                offset = 18,
+                startOffset = 18,
             ),
             Token(
                 type = LEFT_BRACE,
                 lexeme = "{",
                 line = 0,
                 column = 20,
-                offset = 20,
+                startOffset = 20,
             ),
             Token(
                 type = RETURN,
                 lexeme = "return",
                 line = 0,
                 column = 22,
-                offset = 22,
+                startOffset = 22,
             ),
             Token(
                 type = INTEGER,
@@ -516,14 +516,14 @@ class LanguageLexerTest {
                 literal = 42,
                 line = 0,
                 column = 29,
-                offset = 29,
+                startOffset = 29,
             ),
             Token(
                 type = RIGHT_BRACE,
                 lexeme = "}",
                 line = 0,
                 column = 32,
-                offset = 32,
+                startOffset = 32,
             )
         )
         assertEquals(expectedTokens, tokens)
@@ -540,28 +540,28 @@ class LanguageLexerTest {
                 lexeme = "if",
                 line = 0,
                 column = 0,
-                offset = 0,
+                startOffset = 0,
             ),
             Token(
                 type = LEFT_PAREN,
                 lexeme = "(",
                 line = 0,
                 column = 3,
-                offset = 3,
+                startOffset = 3,
             ),
             Token(
                 type = IDENTIFIER,
                 lexeme = "x",
                 line = 0,
                 column = 4,
-                offset = 4,
+                startOffset = 4,
             ),
             Token(
                 type = GREATER_THAN,
                 lexeme = ">",
                 line = 0,
                 column = 6,
-                offset = 6,
+                startOffset = 6,
             ),
             Token(
                 type = INTEGER,
@@ -569,28 +569,28 @@ class LanguageLexerTest {
                 literal = 0,
                 line = 0,
                 column = 8,
-                offset = 8,
+                startOffset = 8,
             ),
             Token(
                 type = RIGHT_PAREN,
                 lexeme = ")",
                 line = 0,
                 column = 9,
-                offset = 9,
+                startOffset = 9,
             ),
             Token(
                 type = LEFT_BRACE,
                 lexeme = "{",
                 line = 0,
                 column = 11,
-                offset = 11,
+                startOffset = 11,
             ),
             Token(
                 type = RIGHT_BRACE,
                 lexeme = "}",
                 line = 0,
                 column = 13,
-                offset = 13,
+                startOffset = 13,
             )
         )
         assertEquals(expectedTokens, tokens)
@@ -607,28 +607,28 @@ class LanguageLexerTest {
                 lexeme = "if",
                 line = 0,
                 column = 0,
-                offset = 0,
+                startOffset = 0,
             ),
             Token(
                 type = LEFT_PAREN,
                 lexeme = "(",
                 line = 0,
                 column = 3,
-                offset = 3,
+                startOffset = 3,
             ),
             Token(
                 type = IDENTIFIER,
                 lexeme = "value",
                 line = 0,
                 column = 4,
-                offset = 4,
+                startOffset = 4,
             ),
             Token(
                 type = EQUAL_EQUAL,
                 lexeme = "==",
                 line = 0,
                 column = 10,
-                offset = 10,
+                startOffset = 10,
             ),
             Token(
                 type = INTEGER,
@@ -636,49 +636,49 @@ class LanguageLexerTest {
                 literal = 100,
                 line = 0,
                 column = 13,
-                offset = 13,
+                startOffset = 13,
             ),
             Token(
                 type = RIGHT_PAREN,
                 lexeme = ")",
                 line = 0,
                 column = 16,
-                offset = 16,
+                startOffset = 16,
             ),
             Token(
                 type = LEFT_BRACE,
                 lexeme = "{",
                 line = 0,
                 column = 18,
-                offset = 18,
+                startOffset = 18,
             ),
             Token(
                 type = RIGHT_BRACE,
                 lexeme = "}",
                 line = 0,
                 column = 20,
-                offset = 20,
+                startOffset = 20,
             ),
             Token(
                 type = ELSE,
                 lexeme = "else",
                 line = 0,
                 column = 22,
-                offset = 22,
+                startOffset = 22,
             ),
             Token(
                 type = LEFT_BRACE,
                 lexeme = "{",
                 line = 0,
                 column = 27,
-                offset = 27,
+                startOffset = 27,
             ),
             Token(
                 type = RIGHT_BRACE,
                 lexeme = "}",
                 line = 0,
                 column = 29,
-                offset = 29,
+                startOffset = 29,
             )
         )
         assertEquals(expectedTokens, tokens)

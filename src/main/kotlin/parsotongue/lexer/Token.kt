@@ -18,7 +18,23 @@ data class Token(
     val line: Int,
     val column: Int,
     /**
-     * Offset is a global **index** in the source string
+     * Start offset is a global **index** in the source string, 0-based counting.
      */
-    val offset: Int,
-)
+    val startOffset: Int,
+) {
+    /**
+     * Length of the token in the source in characters.
+     */
+    val length: Int
+        get() = lexeme.length
+
+    /**
+     * The global 0-based end position of the token in the source string.
+     *
+     * Calculated as the sum of `startOffset` and `length`.
+     *
+     * The token is inside a range: [[startOffset], [endOffset]).
+     */
+    val endOffset: Int
+        get() = startOffset + length
+}
