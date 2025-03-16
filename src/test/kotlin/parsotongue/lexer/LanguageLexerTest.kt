@@ -4,7 +4,32 @@ import ij.demo.parsotongue.lexer.LanguageLexer
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import parsotongue.lexer.TokenType.Identifier.IDENTIFIER
+import parsotongue.lexer.TokenType.Keyword.ELSE
+import parsotongue.lexer.TokenType.Keyword.FUNCTION
+import parsotongue.lexer.TokenType.Keyword.IF
+import parsotongue.lexer.TokenType.Keyword.RETURN
+import parsotongue.lexer.TokenType.Keyword.VAR
+import parsotongue.lexer.TokenType.Literal.INTEGER
+import parsotongue.lexer.TokenType.Operator.DIVIDE
+import parsotongue.lexer.TokenType.Operator.EQUAL_EQUAL
+import parsotongue.lexer.TokenType.Operator.GREATER_EQUAL
+import parsotongue.lexer.TokenType.Operator.GREATER_THAN
+import parsotongue.lexer.TokenType.Operator.LESS_EQUAL
+import parsotongue.lexer.TokenType.Operator.LESS_THAN
+import parsotongue.lexer.TokenType.Operator.MINUS
+import parsotongue.lexer.TokenType.Operator.MODULO
+import parsotongue.lexer.TokenType.Operator.MULTIPLY
+import parsotongue.lexer.TokenType.Operator.NOT_EQUAL
+import parsotongue.lexer.TokenType.Operator.PLUS
+import parsotongue.lexer.TokenType.Symbol.ASSIGN
+import parsotongue.lexer.TokenType.Symbol.LEFT_BRACE
+import parsotongue.lexer.TokenType.Symbol.LEFT_PAREN
+import parsotongue.lexer.TokenType.Symbol.RIGHT_BRACE
+import parsotongue.lexer.TokenType.Symbol.RIGHT_PAREN
 import kotlin.test.assertEquals
+
+
 
 class LanguageLexerTest {
     private lateinit var lexer: Lexer
@@ -22,7 +47,7 @@ class LanguageLexerTest {
         val expectedTokens = listOf(
             // 1
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "1",
                 literal = 1,
                 line = 0,
@@ -31,7 +56,7 @@ class LanguageLexerTest {
             ),
             // +
             Token(
-                type = TokenType.PLUS,
+                type = PLUS,
                 lexeme = "+",
                 line = 0,
                 column = 2,
@@ -39,7 +64,7 @@ class LanguageLexerTest {
             ),
             // 2
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "2",
                 literal = 2,
                 line = 0,
@@ -57,7 +82,7 @@ class LanguageLexerTest {
 
         val expectedTokens = listOf(
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "5",
                 literal = 5,
                 line = 0,
@@ -65,14 +90,14 @@ class LanguageLexerTest {
                 offset = 0,
             ),
             Token(
-                type = TokenType.MINUS,
+                type = MINUS,
                 lexeme = "-",
                 line = 0,
                 column = 2,
                 offset = 2,
             ),
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "3",
                 literal = 3,
                 line = 0,
@@ -90,7 +115,7 @@ class LanguageLexerTest {
 
         val expectedTokens = listOf(
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "4",
                 literal = 4,
                 line = 0,
@@ -98,14 +123,14 @@ class LanguageLexerTest {
                 offset = 0,
             ),
             Token(
-                type = TokenType.MULTIPLY,
+                type = MULTIPLY,
                 lexeme = "*",
                 line = 0,
                 column = 2,
                 offset = 2,
             ),
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "6",
                 literal = 6,
                 line = 0,
@@ -123,7 +148,7 @@ class LanguageLexerTest {
 
         val expectedTokens = listOf(
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "8",
                 literal = 8,
                 line = 0,
@@ -131,14 +156,14 @@ class LanguageLexerTest {
                 offset = 0,
             ),
             Token(
-                type = TokenType.DIVIDE,
+                type = DIVIDE,
                 lexeme = "/",
                 line = 0,
                 column = 2,
                 offset = 2,
             ),
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "2",
                 literal = 2,
                 line = 0,
@@ -156,7 +181,7 @@ class LanguageLexerTest {
 
         val expectedTokens = listOf(
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "10",
                 literal = 10,
                 line = 0,
@@ -164,14 +189,14 @@ class LanguageLexerTest {
                 offset = 0,
             ),
             Token(
-                type = TokenType.MODULO,
+                type = MODULO,
                 lexeme = "%",
                 line = 0,
                 column = 3,
                 offset = 3,
             ),
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "3",
                 literal = 3,
                 line = 0,
@@ -189,14 +214,14 @@ class LanguageLexerTest {
 
         val expectedTokens = listOf(
             Token(
-                type = TokenType.VAR,
+                type = VAR,
                 lexeme = "var",
                 line = 0,
                 column = 0,
                 offset = 0,
             ),
             Token(
-                type = TokenType.IDENTIFIER,
+                type = IDENTIFIER,
                 lexeme = "counter",
                 line = 0,
                 column = 4,
@@ -213,28 +238,28 @@ class LanguageLexerTest {
 
         val expectedTokens = listOf(
             Token(
-                type = TokenType.VAR,
+                type = VAR,
                 lexeme = "var",
                 line = 0,
                 column = 0,
                 offset = 0,
             ),
             Token(
-                type = TokenType.IDENTIFIER,
+                type = IDENTIFIER,
                 lexeme = "total",
                 line = 0,
                 column = 4,
                 offset = 4,
             ),
             Token(
-                type = TokenType.ASSIGN,
+                type = ASSIGN,
                 lexeme = "=",
                 line = 0,
                 column = 10,
                 offset = 10,
             ),
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "42",
                 literal = 42,
                 line = 0,
@@ -252,7 +277,7 @@ class LanguageLexerTest {
 
         val expectedTokens = listOf(
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "5",
                 literal = 5,
                 line = 0,
@@ -260,14 +285,14 @@ class LanguageLexerTest {
                 offset = 0,
             ),
             Token(
-                type = TokenType.LESS_THAN,
+                type = LESS_THAN,
                 lexeme = "<",
                 line = 0,
                 column = 2,
                 offset = 2,
             ),
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "10",
                 literal = 10,
                 line = 0,
@@ -275,14 +300,14 @@ class LanguageLexerTest {
                 offset = 4,
             ),
             Token(
-                type = TokenType.GREATER_THAN,
+                type = GREATER_THAN,
                 lexeme = ">",
                 line = 0,
                 column = 7,
                 offset = 7,
             ),
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "3",
                 literal = 3,
                 line = 0,
@@ -300,21 +325,21 @@ class LanguageLexerTest {
 
         val expectedTokens = listOf(
             Token(
-                type = TokenType.IDENTIFIER,
+                type = IDENTIFIER,
                 lexeme = "x",
                 line = 0,
                 column = 0,
                 offset = 0,
             ),
             Token(
-                type = TokenType.LESS_EQUAL,
+                type = LESS_EQUAL,
                 lexeme = "<=",
                 line = 0,
                 column = 2,
                 offset = 2,
             ),
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "100",
                 literal = 100,
                 line = 0,
@@ -322,14 +347,14 @@ class LanguageLexerTest {
                 offset = 5,
             ),
             Token(
-                type = TokenType.GREATER_EQUAL,
+                type = GREATER_EQUAL,
                 lexeme = ">=",
                 line = 0,
                 column = 9,
                 offset = 9,
             ),
             Token(
-                type = TokenType.IDENTIFIER,
+                type = IDENTIFIER,
                 lexeme = "y",
                 line = 0,
                 column = 12,
@@ -346,21 +371,21 @@ class LanguageLexerTest {
 
         val expectedTokens = listOf(
             Token(
-                type = TokenType.IDENTIFIER,
+                type = IDENTIFIER,
                 lexeme = "count",
                 line = 0,
                 column = 0,
                 offset = 0,
             ),
             Token(
-                type = TokenType.EQUAL_EQUAL,
+                type = EQUAL_EQUAL,
                 lexeme = "==",
                 line = 0,
                 column = 6,
                 offset = 6,
             ),
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "0",
                 literal = 0,
                 line = 0,
@@ -368,14 +393,14 @@ class LanguageLexerTest {
                 offset = 9,
             ),
             Token(
-                type = TokenType.NOT_EQUAL,
+                type = NOT_EQUAL,
                 lexeme = "!=",
                 line = 0,
                 column = 11,
                 offset = 11,
             ),
             Token(
-                type = TokenType.IDENTIFIER,
+                type = IDENTIFIER,
                 lexeme = "max",
                 line = 0,
                 column = 14,
@@ -392,42 +417,42 @@ class LanguageLexerTest {
 
         val expectedTokens = listOf(
             Token(
-                type = TokenType.FUNCTION,
+                type = FUNCTION,
                 lexeme = "function",
                 line = 0,
                 column = 0,
                 offset = 0,
             ),
             Token(
-                type = TokenType.IDENTIFIER,
+                type = IDENTIFIER,
                 lexeme = "init",
                 line = 0,
                 column = 9,
                 offset = 9,
             ),
             Token(
-                type = TokenType.LEFT_PAREN,
+                type = LEFT_PAREN,
                 lexeme = "(",
                 line = 0,
                 column = 13,
                 offset = 13,
             ),
             Token(
-                type = TokenType.RIGHT_PAREN,
+                type = RIGHT_PAREN,
                 lexeme = ")",
                 line = 0,
                 column = 14,
                 offset = 14,
             ),
             Token(
-                type = TokenType.LEFT_BRACE,
+                type = LEFT_BRACE,
                 lexeme = "{",
                 line = 0,
                 column = 16,
                 offset = 16,
             ),
             Token(
-                type = TokenType.RIGHT_BRACE,
+                type = RIGHT_BRACE,
                 lexeme = "}",
                 line = 0,
                 column = 18,
@@ -444,49 +469,49 @@ class LanguageLexerTest {
 
         val expectedTokens = listOf(
             Token(
-                type = TokenType.FUNCTION,
+                type = FUNCTION,
                 lexeme = "function",
                 line = 0,
                 column = 0,
                 offset = 0,
             ),
             Token(
-                type = TokenType.IDENTIFIER,
+                type = IDENTIFIER,
                 lexeme = "getValue",
                 line = 0,
                 column = 9,
                 offset = 9,
             ),
             Token(
-                type = TokenType.LEFT_PAREN,
+                type = LEFT_PAREN,
                 lexeme = "(",
                 line = 0,
                 column = 17,
                 offset = 17,
             ),
             Token(
-                type = TokenType.RIGHT_PAREN,
+                type = RIGHT_PAREN,
                 lexeme = ")",
                 line = 0,
                 column = 18,
                 offset = 18,
             ),
             Token(
-                type = TokenType.LEFT_BRACE,
+                type = LEFT_BRACE,
                 lexeme = "{",
                 line = 0,
                 column = 20,
                 offset = 20,
             ),
             Token(
-                type = TokenType.RETURN,
+                type = RETURN,
                 lexeme = "return",
                 line = 0,
                 column = 22,
                 offset = 22,
             ),
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "42",
                 literal = 42,
                 line = 0,
@@ -494,7 +519,7 @@ class LanguageLexerTest {
                 offset = 29,
             ),
             Token(
-                type = TokenType.RIGHT_BRACE,
+                type = RIGHT_BRACE,
                 lexeme = "}",
                 line = 0,
                 column = 32,
@@ -511,35 +536,35 @@ class LanguageLexerTest {
 
         val expectedTokens = listOf(
             Token(
-                type = TokenType.IF,
+                type = IF,
                 lexeme = "if",
                 line = 0,
                 column = 0,
                 offset = 0,
             ),
             Token(
-                type = TokenType.LEFT_PAREN,
+                type = LEFT_PAREN,
                 lexeme = "(",
                 line = 0,
                 column = 3,
                 offset = 3,
             ),
             Token(
-                type = TokenType.IDENTIFIER,
+                type = IDENTIFIER,
                 lexeme = "x",
                 line = 0,
                 column = 4,
                 offset = 4,
             ),
             Token(
-                type = TokenType.GREATER_THAN,
+                type = GREATER_THAN,
                 lexeme = ">",
                 line = 0,
                 column = 6,
                 offset = 6,
             ),
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "0",
                 literal = 0,
                 line = 0,
@@ -547,21 +572,21 @@ class LanguageLexerTest {
                 offset = 8,
             ),
             Token(
-                type = TokenType.RIGHT_PAREN,
+                type = RIGHT_PAREN,
                 lexeme = ")",
                 line = 0,
                 column = 9,
                 offset = 9,
             ),
             Token(
-                type = TokenType.LEFT_BRACE,
+                type = LEFT_BRACE,
                 lexeme = "{",
                 line = 0,
                 column = 11,
                 offset = 11,
             ),
             Token(
-                type = TokenType.RIGHT_BRACE,
+                type = RIGHT_BRACE,
                 lexeme = "}",
                 line = 0,
                 column = 13,
@@ -578,35 +603,35 @@ class LanguageLexerTest {
 
         val expectedTokens = listOf(
             Token(
-                type = TokenType.IF,
+                type = IF,
                 lexeme = "if",
                 line = 0,
                 column = 0,
                 offset = 0,
             ),
             Token(
-                type = TokenType.LEFT_PAREN,
+                type = LEFT_PAREN,
                 lexeme = "(",
                 line = 0,
                 column = 3,
                 offset = 3,
             ),
             Token(
-                type = TokenType.IDENTIFIER,
+                type = IDENTIFIER,
                 lexeme = "value",
                 line = 0,
                 column = 4,
                 offset = 4,
             ),
             Token(
-                type = TokenType.EQUAL_EQUAL,
+                type = EQUAL_EQUAL,
                 lexeme = "==",
                 line = 0,
                 column = 10,
                 offset = 10,
             ),
             Token(
-                type = TokenType.INTEGER,
+                type = INTEGER,
                 lexeme = "100",
                 literal = 100,
                 line = 0,
@@ -614,42 +639,42 @@ class LanguageLexerTest {
                 offset = 13,
             ),
             Token(
-                type = TokenType.RIGHT_PAREN,
+                type = RIGHT_PAREN,
                 lexeme = ")",
                 line = 0,
                 column = 16,
                 offset = 16,
             ),
             Token(
-                type = TokenType.LEFT_BRACE,
+                type = LEFT_BRACE,
                 lexeme = "{",
                 line = 0,
                 column = 18,
                 offset = 18,
             ),
             Token(
-                type = TokenType.RIGHT_BRACE,
+                type = RIGHT_BRACE,
                 lexeme = "}",
                 line = 0,
                 column = 20,
                 offset = 20,
             ),
             Token(
-                type = TokenType.ELSE,
+                type = ELSE,
                 lexeme = "else",
                 line = 0,
                 column = 22,
                 offset = 22,
             ),
             Token(
-                type = TokenType.LEFT_BRACE,
+                type = LEFT_BRACE,
                 lexeme = "{",
                 line = 0,
                 column = 27,
                 offset = 27,
             ),
             Token(
-                type = TokenType.RIGHT_BRACE,
+                type = RIGHT_BRACE,
                 lexeme = "}",
                 line = 0,
                 column = 29,

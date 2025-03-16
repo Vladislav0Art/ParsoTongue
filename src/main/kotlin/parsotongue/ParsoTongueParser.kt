@@ -1,7 +1,7 @@
 package parsotongue
 
 import parsotongue.lexer.Lexer
-import parsotongue.parser.ASTNode.Program
+import parsotongue.parser.Program
 import parsotongue.parser.Parser
 
 class ParsoTongueParser(
