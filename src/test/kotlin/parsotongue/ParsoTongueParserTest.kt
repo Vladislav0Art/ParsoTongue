@@ -1,6 +1,5 @@
 package parsotongue
 
-import kotlinx.coroutines.test.runTest
 import parsotongue.providers.LanguageLexerProvider
 import parsotongue.providers.LanguageParserProvider
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -32,7 +31,7 @@ class ParsoTongueParserTest {
     }
 
     @Test
-    fun `test arithmetic expression`() = runTest {
+    fun `test arithmetic expression`() {
         val source = "1 + 2 + 12;"
         val program = parser.parse(source)
 
@@ -61,7 +60,7 @@ class ParsoTongueParserTest {
     }
 
     @Test
-    fun `test variable declaration and assignment`() = runTest {
+    fun `test variable declaration and assignment`() {
         val source = "var x = 42;"
         val program = parser.parse(source)
 
@@ -76,7 +75,7 @@ class ParsoTongueParserTest {
     }
 
     @Test
-    fun `test string variable declaration`() = runTest {
+    fun `test string variable declaration`() {
         val source = """var message = "Hello, World!";"""
         val program = parser.parse(source)
 
@@ -91,7 +90,7 @@ class ParsoTongueParserTest {
     }
 
     @Test
-    fun `test arithmetic operations`() = runTest {
+    fun `test arithmetic operations`() {
         val source = """
             var a = 10 + 5;
             var b = 20 - 3;
@@ -148,7 +147,7 @@ class ParsoTongueParserTest {
     }
 
     @Test
-    fun `test comparison operations`() = runTest {
+    fun `test comparison operations`() {
         val source = """
             var a = 10 == 10;
             var b = 20 != 30;
@@ -214,7 +213,7 @@ class ParsoTongueParserTest {
     }
 
     @Test
-    fun `test function declarations`() = runTest {
+    fun `test function declarations`() {
         val source = """
             function empty() {
                 var x = 1;
@@ -281,7 +280,7 @@ class ParsoTongueParserTest {
     }
 
     @Test
-    fun `test conditional statements`() = runTest {
+    fun `test conditional statements`() {
         val source = """
             if (x > 10) {
                 var result = "greater";
@@ -372,9 +371,9 @@ class ParsoTongueParserTest {
     }
 
     @Test
-    fun `test parsing from file`() = runTest {
+    fun `test parsing from file`() {
         val program = parser.read("src/test/resources/test_program.pt")
-        // only some parts of AST is checked if file is big
+        // only some parts of AST is checked. file is big
 
         // verify function declarations exist
         val functionNames = program.statements

@@ -10,7 +10,7 @@ class ParsoTongueParser(
     private val lexerProvider: LexerProvider,
     private val parserProvider: ParserProvider,
 ) {
-    suspend fun parse(source: String): Program {
+    fun parse(source: String): Program {
         val lexer = lexerProvider.get(source)
         val tokens = lexer.tokenize()
 
@@ -20,7 +20,7 @@ class ParsoTongueParser(
         return program
     }
 
-    suspend fun parse(file: File): Program = parse(file.readText())
+    fun parse(file: File): Program = parse(file.readText())
 
-    suspend fun read(filepath: String): Program = parse(File(filepath))
+    fun read(filepath: String): Program = parse(File(filepath))
 }

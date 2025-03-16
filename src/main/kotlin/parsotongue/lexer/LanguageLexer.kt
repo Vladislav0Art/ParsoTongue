@@ -22,7 +22,7 @@ class LanguageLexer(private val source: String) : Lexer {
         "return" to Keyword.RETURN
     )
 
-    override suspend fun tokenize(): List<Token> {
+    override fun tokenize(): List<Token> {
         while (!isAtEnd()) {
             start = current
             scanToken()
