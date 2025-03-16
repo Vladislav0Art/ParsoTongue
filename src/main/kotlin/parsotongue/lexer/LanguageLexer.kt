@@ -76,7 +76,7 @@ class LanguageLexer(private val source: String) : Lexer {
 
             // ignore whitespace
             ' ', '\r', '\t' -> {
-                column++
+                // no column advancement because it was already performed by `advance`
             }
             // newline
             '\n' -> {
@@ -205,12 +205,18 @@ class LanguageLexer(private val source: String) : Lexer {
 
     private fun addToken(type: TokenType, literal: Any? = null) {
         val text = source.substring(start, current)
+
+        // `column` represents the "end position" of the current token.
+        // in other words, it is the next position after the token.
+        // we want to record the starting position, hence we subtract the length.
+        val startColumn = column - text.length
+
         tokens.add(Token(
             type = type,
             lexeme = text,
             literal = literal,
             line = line,
-            column = column,
+            column = startColumn,
             startOffset = start,
         ))
     }
