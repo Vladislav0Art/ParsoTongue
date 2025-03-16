@@ -2,6 +2,7 @@ package parsotongue.lexer
 
 import parsotongue.lexer.TokenType.*
 
+// TODO: add support for syntax extensions (here and in Parser)?
 
 class LanguageLexer(private val source: String) : Lexer {
     private val tokens = mutableListOf<Token>()
