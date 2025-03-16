@@ -242,12 +242,7 @@ class LanguageParser(private val tokens: List<Token>) : Parser {
      * @throws MissingBinaryOperatorException if the given token type is not a valid binary operator.
      */
     private fun expectBinaryOperator(type: TokenType): Operator {
-        val nonBinaryOperators = listOf(
-            Operator.EQUAL_EQUAL, Operator.NOT_EQUAL,
-            Operator.GREATER_THAN, Operator.GREATER_EQUAL,
-            Operator.LESS_THAN, Operator.LESS_EQUAL,
-        )
-        if (type is Operator && type !in nonBinaryOperators) {
+        if (type is Operator) {
             return type
         }
         throw MissingBinaryOperatorException(type)
@@ -335,4 +330,3 @@ class LanguageParser(private val tokens: List<Token>) : Parser {
         return tokens[current - 1]
     }
 }
-
