@@ -19,6 +19,7 @@ class ParsoTongueParserTest {
 
     @Test
     fun parse() {
+
     }
 
 }
