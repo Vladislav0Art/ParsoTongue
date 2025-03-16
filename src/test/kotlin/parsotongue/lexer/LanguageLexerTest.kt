@@ -7,6 +7,7 @@ import parsotongue.lexer.TokenType.Identifier.IDENTIFIER
 import parsotongue.lexer.TokenType.Keyword.*
 import parsotongue.lexer.TokenType.Literal.INTEGER
 import parsotongue.lexer.TokenType.Operator.*
+import parsotongue.lexer.TokenType.Other.EOF
 import parsotongue.lexer.TokenType.Symbol.*
 import parsotongue.providers.LanguageLexerProvider
 import kotlin.test.assertEquals
@@ -20,6 +21,9 @@ class LanguageLexerTest {
         lexerProvider = LanguageLexerProvider
     }
 
+    /**
+     * Produces an implementation of [Lexer].
+     */
     private fun lexer(source: String) = lexerProvider.get(source)
 
     @Test
@@ -33,16 +37,16 @@ class LanguageLexerTest {
                 type = INTEGER,
                 lexeme = "1",
                 literal = 1,
-                line = 0,
-                column = 0,
+                line = 1,
+                column = 1,
                 startOffset = 0,
             ),
             // +
             Token(
                 type = PLUS,
                 lexeme = "+",
-                line = 0,
-                column = 2,
+                line = 1,
+                column = 3,
                 startOffset = 2,
             ),
             // 2
@@ -50,8 +54,16 @@ class LanguageLexerTest {
                 type = INTEGER,
                 lexeme = "2",
                 literal = 2,
-                line = 0,
-                column = 4,
+                line = 1,
+                column = 5,
+                startOffset = 4,
+            ),
+            // EOF
+            Token(
+                type = EOF,
+                lexeme = "",
+                line = 1,
+                column = 6,
                 startOffset = 4,
             )
         )
