@@ -80,23 +80,30 @@ class LanguageLexerTest {
                 type = INTEGER,
                 lexeme = "5",
                 literal = 5,
-                line = 0,
-                column = 0,
+                line = 1,
+                column = 1,
                 startOffset = 0,
             ),
             Token(
                 type = MINUS,
                 lexeme = "-",
-                line = 0,
-                column = 2,
+                line = 1,
+                column = 3,
                 startOffset = 2,
             ),
             Token(
                 type = INTEGER,
                 lexeme = "3",
                 literal = 3,
-                line = 0,
-                column = 4,
+                line = 1,
+                column = 5,
+                startOffset = 4,
+            ),
+            Token(
+                type = EOF,
+                lexeme = "",
+                line = 1,
+                column = 6,
                 startOffset = 4,
             )
         )
@@ -104,33 +111,40 @@ class LanguageLexerTest {
     }
 
     @Test
-    fun `tokenize multiplication of two digits`() = runTest {
-        val input = "4 * 6"
+    fun `tokenize multiplication of two integers`() = runTest {
+        val input = "421 * 623"
         val tokens = lexer(input).tokenize()
 
         val expectedTokens = listOf(
             Token(
                 type = INTEGER,
-                lexeme = "4",
-                literal = 4,
-                line = 0,
-                column = 0,
+                lexeme = "421",
+                literal = 421,
+                line = 1,
+                column = 1,
                 startOffset = 0,
             ),
             Token(
                 type = MULTIPLY,
                 lexeme = "*",
-                line = 0,
-                column = 2,
-                startOffset = 2,
+                line = 1,
+                column = 5,
+                startOffset = 4,
             ),
             Token(
                 type = INTEGER,
-                lexeme = "6",
-                literal = 6,
-                line = 0,
-                column = 4,
-                startOffset = 4,
+                lexeme = "623",
+                literal = 623,
+                line = 1,
+                column = 7,
+                startOffset = 6,
+            ),
+            Token(
+                type = EOF,
+                lexeme = "",
+                line = 1,
+                column = 10,
+                startOffset = 6,
             )
         )
         assertEquals(expectedTokens, tokens)
