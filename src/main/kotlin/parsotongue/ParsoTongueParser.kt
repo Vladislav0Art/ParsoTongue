@@ -3,6 +3,7 @@ package parsotongue
 import parsotongue.providers.LexerProvider
 import parsotongue.providers.ParserProvider
 import parsotongue.parser.Program
+import java.io.File
 
 
 class ParsoTongueParser(
@@ -18,4 +19,8 @@ class ParsoTongueParser(
 
         return program
     }
+
+    fun parse(file: File): Program = parse(file.readText())
+
+    fun read(filepath: String): Program = parse(File(filepath))
 }
